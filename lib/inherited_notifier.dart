@@ -18,7 +18,7 @@ class _InheritedNotifierExampleState extends State<InheritedNotifierExample>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(seconds: 10),
+      duration: const Duration(seconds: 8),
       vsync: this,
     )..repeat();
   }
@@ -31,7 +31,6 @@ class _InheritedNotifierExampleState extends State<InheritedNotifierExample>
 
   @override
   Widget build(BuildContext context) {
-    print('InheritedNotifierExample build');
     return Scaffold(
       appBar: AppBar(
         title: Text('InheritedNotifier'),
@@ -77,18 +76,23 @@ class Spinner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print('spinner build');
-
     final value = SpinModel.of(context) ?? 0;
+
+    // print('spinner $value');
 
     return Transform.rotate(
       angle: value * 2.0 * math.pi,
       child: Container(
         width: 75,
         height: 75,
-        color: Colors.green,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+          color: Colors.grey,
+        ),
         child: const Center(
-          child: Text('Whee!'),
+          child: Text('Rotating!'),
         ),
       ),
     );

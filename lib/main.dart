@@ -1,28 +1,22 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:widgets_rendering_example/inherited_model.dart';
 
-import '01_stateful.dart';
-import '02_stateful_lifecycle.dart';
-import '03_many_levels_problem.dart';
-import '04_inherited.dart';
-import '05_inherited_notifier.dart';
-import '06_builder.dart';
-import '07_future_builder.dart';
-import '08_stream_builder.dart';
-import '09_value_listenable_builder.dart';
-import '10_layout_builder.dart';
+import 'inherited.dart' as i;
+import 'inherited_notifier.dart';
+import 'many_levels_problem.dart';
+import 'onboarding.dart';
+import 'stateful.dart';
+import 'stateful_lifecycle.dart';
 
 enum Example {
   stateful,
   stateLifecycle,
+  onboarding,
   manyLevels,
   inherited,
   inheritedNotifier,
-  builderParentContext,
-  futureBuilder,
-  streamBuilder,
-  valueListenableBuilder,
-  layoutBuilder,
+  inheritedModel,
 }
 
 void main() {
@@ -34,7 +28,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final example = Example.stateful;
+    final example = Example.inheritedModel;
 
     return MaterialApp(
       title: 'Flutter Demo',
@@ -53,23 +47,62 @@ class MyApp extends StatelessWidget {
         return StatefulLifecycle(text: 'Hello, world!');
       case Example.manyLevels:
         return RootLevelWidget(title: 'Hello, world!');
+      case Example.onboarding:
+        return Onboarding();
       case Example.inherited:
-        return TitleProvider(
-          title: 'Hello, world!',
-          child: IneritedRootLevelWidget(),
+        return i.TitleProvider(
+          title: 'Hello, title!',
+          description: 'Hello, description!',
+          child: i.IneritedRootLevelWidget(),
         );
+      case Example.inheritedModel:
+        return _InheritedModelPage();
       case Example.inheritedNotifier:
         return InheritedNotifierExample();
-      case Example.builderParentContext:
-        return MyBuilderWidget();
-      case Example.futureBuilder:
-        return FutureBuilderSample();
-      case Example.streamBuilder:
-        return StreamBuilderSample();
-      case Example.valueListenableBuilder:
-        return ValueListenableSample();
-      case Example.layoutBuilder:
-        return LayoutBuilderSample();
     }
+  }
+}
+
+class _InheritedModelPage extends StatefulWidget {
+  @override
+  _InheritedModelPageState createState() => _InheritedModelPageState();
+}
+
+class _InheritedModelPageState extends State<_InheritedModelPage> {
+  late String _title;
+
+  @override
+  void initState() {
+    super.initState();
+    _title = 'Hello, title!';
+  }
+
+  void _updateTitle() => setState(() => _title = 'Title changed');
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('InheritedModel'),
+      ),
+      body: Column(
+        children: [
+          GestureDetector(
+            onTap: _updateTitle,
+            child: Container(
+              color: Colors.green,
+              height: 40,
+            ),
+          ),
+          Expanded(
+            child: MyInheritedModel(
+              title: _title,
+              description: 'Hello, description!',
+              child: IneritedRootLevelWidgetAnother(),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
