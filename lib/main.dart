@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:widgets_rendering_example/inherited_model.dart';
 
 import 'inherited.dart' as i;
 import 'inherited_notifier.dart';
@@ -16,7 +15,6 @@ enum Example {
   manyLevels,
   inherited,
   inheritedNotifier,
-  inheritedModel,
 }
 
 void main() {
@@ -28,7 +26,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final example = Example.inheritedModel;
+    final example = Example.onboarding;
 
     return MaterialApp(
       title: 'Flutter Demo',
@@ -55,54 +53,8 @@ class MyApp extends StatelessWidget {
           description: 'Hello, description!',
           child: i.IneritedRootLevelWidget(),
         );
-      case Example.inheritedModel:
-        return _InheritedModelPage();
       case Example.inheritedNotifier:
         return InheritedNotifierExample();
     }
-  }
-}
-
-class _InheritedModelPage extends StatefulWidget {
-  @override
-  _InheritedModelPageState createState() => _InheritedModelPageState();
-}
-
-class _InheritedModelPageState extends State<_InheritedModelPage> {
-  late String _title;
-
-  @override
-  void initState() {
-    super.initState();
-    _title = 'Hello, title!';
-  }
-
-  void _updateTitle() => setState(() => _title = 'Title changed');
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('InheritedModel'),
-      ),
-      body: Column(
-        children: [
-          GestureDetector(
-            onTap: _updateTitle,
-            child: Container(
-              color: Colors.green,
-              height: 40,
-            ),
-          ),
-          Expanded(
-            child: MyInheritedModel(
-              title: _title,
-              description: 'Hello, description!',
-              child: IneritedRootLevelWidgetAnother(),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }
