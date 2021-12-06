@@ -17,14 +17,13 @@ class _StatefulLifecycleState extends State<StatefulLifecycle> {
     super.initState();
     print('initState');
     _isShapeCircle = false;
-    // final a = MediaQuery.of(context).size.height;
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     print('didChangeDependencies');
-    final a = MediaQuery.of(context).size.height;
+    // final a = MediaQuery.of(context).size.height;
   }
 
   @override

@@ -52,8 +52,7 @@ class _OnboardingState extends State<Onboarding> {
               ),
             ),
             Container(
-              color: Colors.green,
-              height: 15,
+              // color: Colors.green,
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -72,7 +71,7 @@ class _OnboardingState extends State<Onboarding> {
                       alignment: Alignment.center,
                       child: const Text(
                         'Стартануть!',
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w500),
                       ),
                     )
